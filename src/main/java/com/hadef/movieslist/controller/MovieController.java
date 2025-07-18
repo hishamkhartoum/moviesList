@@ -9,6 +9,7 @@ import com.hadef.movieslist.service.impl.MovieServiceImpl;
 import com.hadef.movieslist.utils.AppConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +27,7 @@ public class MovieController {
         this.movieServiceImpl = movieServiceImpl;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping("/add-movie")
     public ResponseEntity<MovieDTO> addMovieHandler(
             @RequestPart MultipartFile file,
