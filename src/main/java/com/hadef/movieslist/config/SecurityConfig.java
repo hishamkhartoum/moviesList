@@ -52,6 +52,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
                         req -> req
+                                .requestMatchers(HttpMethod.POST,"/api/v1/forgot-password/**").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/api/v1/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/v1/files/**").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/api/v1/movies/**").permitAll()

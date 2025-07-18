@@ -6,6 +6,17 @@ spring:
     username: root
     url: jdbc:mysql://localhost:3306/movies
     password: '1234Qwer@@'
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ""
+    password: ""
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   jpa:
     properties:
       hibernate:
@@ -13,7 +24,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     show-sql: 'true'
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
 project:
   poster: posters/
 base:

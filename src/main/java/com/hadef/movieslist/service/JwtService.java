@@ -10,6 +10,6 @@ public interface JwtService {
     boolean validateTokenForUser(String token, UserDetails userDetails);
     boolean isRefreshToken(String token);
     boolean isValidToken(String token);
-    String extractUsernameFromToken(String token);
+    String extractEmailFromToken(String token);
     TokenPair generateTokenPair(Authentication authentication);
 }

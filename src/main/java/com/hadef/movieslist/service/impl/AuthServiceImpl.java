@@ -32,11 +32,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public void registerUser(RegisterRequest request) {
-        if(userRepository.existsByUsername(request.getUsername())){
-            throw new IllegalArgumentException("Username is already in use");
+        String email = request.getEmail();
+        if(userRepository.existsByEmail(email)){
+            throw new IllegalArgumentException("Email "+email+" is already in use");
         }
         User user = User.builder()
-                .username(request.getUsername())
+                .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .fullName(request.getFullName())
                 .role(request.getRole())
@@ -48,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
     public TokenPair login(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
+                        loginRequest.getEmail(),
                         loginRequest.getPassword()
                 )
         );
@@ -62,10 +63,10 @@ public class AuthServiceImpl implements AuthService {
         if(!jwtService.isValidToken(refreshToken)){
             throw new IllegalArgumentException("Invalid refresh token");
         }
-        String user = jwtService.extractUsernameFromToken(refreshToken);
+        String user = jwtService.extractEmailFromToken(refreshToken);
         UserDetails userDetails = userDetailsService.loadUserByUsername(user);
         if(userDetails==null){
-            throw new IllegalArgumentException("Invalid username or password");
+            throw new IllegalArgumentException("Invalid email or password");
         }
         UsernamePasswordAuthenticationToken authenticationToken = new
                 UsernamePasswordAuthenticationToken(

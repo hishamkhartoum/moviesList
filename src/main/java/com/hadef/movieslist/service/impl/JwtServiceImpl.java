@@ -67,8 +67,8 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public boolean validateTokenForUser(String token, UserDetails userDetails) {
-        final String username = extractUsernameFromToken(token);
-        return username != null && username.equals(userDetails.getUsername());
+        final String email = extractEmailFromToken(token);
+        return email != null && email.equals(userDetails.getUsername());
     }
 
     @Override
@@ -97,7 +97,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String extractUsernameFromToken(String token) {
+    public String extractEmailFromToken(String token) {
         Claims claims = extractAllClaims(token);
         if(claims != null){
             return claims.getSubject();

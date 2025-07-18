@@ -18,11 +18,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @Column(unique = true, nullable = false)
-    private String username;
+    private String email;
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
     private String fullName;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToOne(mappedBy = "user")
+    private ForgotPassword forgotPassword;
 }
